@@ -13,6 +13,7 @@ constexpr void print(const std::string_view str_fmt, auto&&... args) {
 const string nanstr{ "[NAN]" };
 
 class Rational {
+    friend Rational operator + (const Rational& lhs, const Rational& rhs);
     int n{ 0 };
     int d{ 1 };
 public:
@@ -25,7 +26,6 @@ public:
     string str() const;         // return a formatted STL string
     string raw_str() const;     // return a non-reduced STL string
     Rational& operator = (const Rational&);  // assignment
-    Rational operator + (const Rational&) const;
     Rational operator - (const Rational&) const;
     Rational operator * (const Rational&) const;
     Rational operator / (const Rational&) const;
@@ -69,8 +69,8 @@ Rational& Rational::operator = (const Rational& rhs) {
     return *this;
 }
 
-Rational Rational::operator + (const Rational& rhs) const {
-    return Rational((n * rhs.d) + (d * rhs.n), d * rhs.d);
+Rational operator + (const Rational& lhs, const Rational& rhs) {
+    return Rational((lhs.n * rhs.d) + (lhs.d * rhs.n), lhs.d * rhs.d);
 }
 
 Rational Rational::operator - (const Rational& rhs) const {
@@ -124,4 +124,7 @@ int main() {
     print("a - b = {}\n", a - b);
     print("a * b = {}\n", a * b);
     print("a / b = {}\n", a / b);
+
+    print("b + 14 = {}\n", b + 14);
+    print("14 + b = {}\n", 14 + b);
 }
