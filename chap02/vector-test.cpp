@@ -35,7 +35,7 @@ int main() {
     disp_v(v1, "v1");
     disp_v(v2, "v2");
 
-    v2 = std::move(v1);
+    ::swap(v1, v2);
 
     disp_v(v1, "v1");
     disp_v(v2, "v2");
