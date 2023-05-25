@@ -25,6 +25,7 @@ public:
     std::string str() const;        // return a formatted STL string
     std::string raw_str() const;    // return a non-reduced STL string
     Rational& operator = (const Rational&);  // assignment
+    operator string() { return str(); }
 };
 
 Rational Rational::reduce() const {
@@ -96,6 +97,10 @@ struct std::formatter<Rational> : std::formatter<unsigned> {
     }
 };
 
+void p(const string& s) {
+    print("The string is {}\n", s);
+}
+
 int main() {
     Rational a{ 4, 3 };  // 1 1/3
 
@@ -110,4 +115,10 @@ int main() {
     print("20 - a = {}\n", 20 - a);
     print("20 * a = {}\n", 20 * a);
     print("20 / a = {}\n", 20 / a);
+
+    string s{"Rational is "};
+    s += a;
+    print("{}\n", s);
+
+    p(a);
 }
