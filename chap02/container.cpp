@@ -89,7 +89,7 @@ int main() {
     print("a: {}\n", a.str());
     print("b: {}\n", b.str());
 
-    container c(std::move(a));
+    container c(f(a));
     print("a: {}\n", a.str());
     print("c: {}\n", c.str());
 }
