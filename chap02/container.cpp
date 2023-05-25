@@ -20,6 +20,7 @@ public:
     container() { print("default ctor\n"); }    // default ctor
     container(std::initializer_list<T> il);     // il ctor
     container(const container& rhs);            // copy ctor
+    container(container&& rhs) noexcept;        // move ctor
     ~container();
     void reset();
     container<T>& operator = (const container& rhs);
@@ -36,6 +37,12 @@ container<T>::container(std::initializer_list<T> il) : things{ il.begin(), il.en
 template<typename T>
 container<T>::container(const container& rhs) : things{ rhs.things } {
     print("copy ctor\n");
+}
+
+// move ctor
+template<typename T>
+container<T>::container(container&& rhs) noexcept : things{ std::move(rhs.things) } {
+    print("move ctor\n");
 }
 
 // copy assignment operator
@@ -82,7 +89,7 @@ int main() {
     print("a: {}\n", a.str());
     print("b: {}\n", b.str());
 
-    container c(a);
+    container c(std::move(a));
     print("a: {}\n", a.str());
     print("c: {}\n", c.str());
 }
