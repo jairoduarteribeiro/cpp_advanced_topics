@@ -24,7 +24,6 @@ public:
     ~container();
     void reset();
     container<T>& operator = (container rhs);   // copy/swap
-    container<T>& operator = (container&& rhs) noexcept;
     string str() const;
 };
 
@@ -51,14 +50,6 @@ template<typename T>
 container<T>& container<T>::operator = (container rhs) {
     print("copy/swap operator\n");
     std::swap(things, rhs.things);
-    return *this;
-}
-
-// move assignment operator
-template<typename T>
-container<T>& container<T>::operator = (container&& rhs) noexcept {
-    print("move assignment operator\n");
-    if (this != &rhs) things = std::move(rhs.things);
     return *this;
 }
 
@@ -98,7 +89,7 @@ int main() {
     print("a: {}\n", a.str());
     print("b: {}\n", b.str());
 
-    b = a;
+    b = std::move(a);
 
     print("a: {}\n", a.str());
     print("b: {}\n", b.str());
