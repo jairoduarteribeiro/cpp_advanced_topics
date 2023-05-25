@@ -8,7 +8,8 @@ constexpr void print(const std::string_view str_fmt, auto&&... args) {
 }
 
 int main() {
-    const char* greeting{ "Hello, earthlings" };
-    auto x = [greeting]() { return greeting; };
+    const char* greeting{ "Hello" };
+    const char* folks{ "earthlings" };
+    auto x = [greeting, folks]() { return std::format("{}, {}", greeting, folks); };
     print("{}\n", x());
 }
