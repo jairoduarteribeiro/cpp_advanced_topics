@@ -8,6 +8,6 @@ constexpr void print(const std::string_view str_fmt, auto&&... args) {
 }
 
 int main() {
-    auto x = [] { print("Hello, earthlings\n"); };
-    x();
+    auto x = [] { return "Hello, earthlings"; };
+    print("{}\n", x());
 }
