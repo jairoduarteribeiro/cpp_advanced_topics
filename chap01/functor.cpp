@@ -17,7 +17,8 @@ public:
 int main() {
     const MultBy times4(4);
     const MultBy times10(10);
-    const MultBy times15(15);
+
+    const auto times15 = [](int n) { return n * 15; };
 
     print("times4(5) is {}\n", times4(5));
     print("times4(15) is {}\n", times4(15));
