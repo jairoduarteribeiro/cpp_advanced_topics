@@ -23,7 +23,7 @@ public:
     container(container&& rhs) noexcept;        // move ctor
     ~container();
     void reset();
-    container<T>& operator = (const container& rhs);
+    container<T>& operator = (container rhs);   // copy/swap
     container<T>& operator = (container&& rhs) noexcept;
     string str() const;
 };
@@ -46,11 +46,11 @@ container<T>::container(container&& rhs) noexcept : things{ std::move(rhs.things
     print("move ctor\n");
 }
 
-// copy assignment operator
+// copy/swap operator
 template<typename T>
-container<T>& container<T>::operator = (const container& rhs) {
-    print("copy assignment operator\n");
-    if (this != &rhs) things = rhs.things;
+container<T>& container<T>::operator = (container rhs) {
+    print("copy/swap operator\n");
+    std::swap(things, rhs.things);
     return *this;
 }
 
@@ -98,8 +98,8 @@ int main() {
     print("a: {}\n", a.str());
     print("b: {}\n", b.str());
 
-    container<string> c {};
-    c = std::move(a);
+    b = a;
+
     print("a: {}\n", a.str());
-    print("c: {}\n", c.str());
+    print("b: {}\n", b.str());
 }
